@@ -1,12 +1,10 @@
-// To parse this JSON data, do
-//
-//     final CurrentForecast = CurrentForecastFromJson(jsonString);
+//final CurrentForecast = CurrentForecastFromJson(jsonString?);
 
 import 'dart:convert';
 
 List<CurrentForecast> CurrentForecastFromJson(String str) => List<CurrentForecast>.from(json.decode(str).map((x) => CurrentForecast.fromJson(x)));
 
-String CurrentForecastToJson(List<CurrentForecast> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String? CurrentForecastToJson(List<CurrentForecast> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CurrentForecast {
     CurrentForecast({
@@ -46,7 +44,7 @@ class CurrentForecast {
 
     DateTime localObservationDateTime;
     int epochTime;
-    String weatherText;
+    String? weatherText;
     int weatherIcon;
     bool hasPrecipitation;
     dynamic precipitationType;
@@ -60,9 +58,9 @@ class CurrentForecast {
     Wind wind;
     WindGust windGust;
     int uvIndex;
-    String uvIndexText;
+    String? uvIndexText;
     ApparentTemperature visibility;
-    String obstructionsToVisibility;
+    String? obstructionsToVisibility;
     int cloudCover;
     ApparentTemperature ceiling;
     ApparentTemperature pressure;
@@ -72,12 +70,12 @@ class CurrentForecast {
     ApparentTemperature windChillTemperature;
     ApparentTemperature wetBulbTemperature;
     ApparentTemperature precip1Hr;
-    Map<String, ApparentTemperature> precipitationSummary;
+    Map<String?, ApparentTemperature> precipitationSummary;
     TemperatureSummary temperatureSummary;
-    String mobileLink;
-    String link;
+    String? mobileLink;
+    String? link;
 
-    factory CurrentForecast.fromJson(Map<String, dynamic> json) => CurrentForecast(
+    factory CurrentForecast.fromJson(Map<String?, dynamic> json) => CurrentForecast(
         localObservationDateTime: DateTime.parse(json["LocalObservationDateTime"]),
         epochTime: json["EpochTime"],
         weatherText: json["WeatherText"],
@@ -106,13 +104,13 @@ class CurrentForecast {
         windChillTemperature: ApparentTemperature.fromJson(json["WindChillTemperature"]),
         wetBulbTemperature: ApparentTemperature.fromJson(json["WetBulbTemperature"]),
         precip1Hr: ApparentTemperature.fromJson(json["Precip1hr"]),
-        precipitationSummary: Map.from(json["PrecipitationSummary"]).map((k, v) => MapEntry<String, ApparentTemperature>(k, ApparentTemperature.fromJson(v))),
+        precipitationSummary: Map.from(json["PrecipitationSummary"]).map((k, v) => MapEntry<String?, ApparentTemperature>(k, ApparentTemperature.fromJson(v))),
         temperatureSummary: TemperatureSummary.fromJson(json["TemperatureSummary"]),
         mobileLink: json["MobileLink"],
         link: json["Link"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "LocalObservationDateTime": localObservationDateTime.toIso8601String(),
         "EpochTime": epochTime,
         "WeatherText": weatherText,
@@ -141,7 +139,7 @@ class CurrentForecast {
         "WindChillTemperature": windChillTemperature.toJson(),
         "WetBulbTemperature": wetBulbTemperature.toJson(),
         "Precip1hr": precip1Hr.toJson(),
-        "PrecipitationSummary": Map.from(precipitationSummary).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "PrecipitationSummary": Map.from(precipitationSummary).map((k, v) => MapEntry<String?, dynamic>(k, v.toJson())),
         "TemperatureSummary": temperatureSummary.toJson(),
         "MobileLink": mobileLink,
         "Link": link,
@@ -157,12 +155,12 @@ class ApparentTemperature {
     Imperial metric;
     Imperial imperial;
 
-    factory ApparentTemperature.fromJson(Map<String, dynamic> json) => ApparentTemperature(
+    factory ApparentTemperature.fromJson(Map<String?, dynamic> json) => ApparentTemperature(
         metric: Imperial.fromJson(json["Metric"]),
         imperial: Imperial.fromJson(json["Imperial"]),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Metric": metric.toJson(),
         "Imperial": imperial.toJson(),
     };
@@ -177,18 +175,18 @@ class Imperial {
     });
 
     double value;
-    String unit;
+    String? unit;
     int unitType;
-    String phrase;
+    String? phrase;
 
-    factory Imperial.fromJson(Map<String, dynamic> json) => Imperial(
+    factory Imperial.fromJson(Map<String?, dynamic> json) => Imperial(
         value: json["Value"].toDouble(),
         unit: json["Unit"],
         unitType: json["UnitType"],
         phrase: json["Phrase"] == null ? null : json["Phrase"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Value": value,
         "Unit": unit,
         "UnitType": unitType,
@@ -202,15 +200,15 @@ class PressureTendency {
         required this.code,
     });
 
-    String localizedText;
-    String code;
+    String? localizedText;
+    String? code;
 
-    factory PressureTendency.fromJson(Map<String, dynamic> json) => PressureTendency(
+    factory PressureTendency.fromJson(Map<String?, dynamic> json) => PressureTendency(
         localizedText: json["LocalizedText"],
         code: json["Code"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "LocalizedText": localizedText,
         "Code": code,
     };
@@ -227,13 +225,13 @@ class TemperatureSummary {
     PastHourRange past12HourRange;
     PastHourRange past24HourRange;
 
-    factory TemperatureSummary.fromJson(Map<String, dynamic> json) => TemperatureSummary(
+    factory TemperatureSummary.fromJson(Map<String?, dynamic> json) => TemperatureSummary(
         past6HourRange: PastHourRange.fromJson(json["Past6HourRange"]),
         past12HourRange: PastHourRange.fromJson(json["Past12HourRange"]),
         past24HourRange: PastHourRange.fromJson(json["Past24HourRange"]),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Past6HourRange": past6HourRange.toJson(),
         "Past12HourRange": past12HourRange.toJson(),
         "Past24HourRange": past24HourRange.toJson(),
@@ -249,12 +247,12 @@ class PastHourRange {
     ApparentTemperature minimum;
     ApparentTemperature maximum;
 
-    factory PastHourRange.fromJson(Map<String, dynamic> json) => PastHourRange(
+    factory PastHourRange.fromJson(Map<String?, dynamic> json) => PastHourRange(
         minimum: ApparentTemperature.fromJson(json["Minimum"]),
         maximum: ApparentTemperature.fromJson(json["Maximum"]),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Minimum": minimum.toJson(),
         "Maximum": maximum.toJson(),
     };
@@ -269,12 +267,12 @@ class Wind {
     Direction direction;
     ApparentTemperature speed;
 
-    factory Wind.fromJson(Map<String, dynamic> json) => Wind(
+    factory Wind.fromJson(Map<String?, dynamic> json) => Wind(
         direction: Direction.fromJson(json["Direction"]),
         speed: ApparentTemperature.fromJson(json["Speed"]),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Direction": direction.toJson(),
         "Speed": speed.toJson(),
     };
@@ -288,16 +286,16 @@ class Direction {
     });
 
     int degrees;
-    String localized;
-    String english;
+    String? localized;
+    String? english;
 
-    factory Direction.fromJson(Map<String, dynamic> json) => Direction(
+    factory Direction.fromJson(Map<String?, dynamic> json) => Direction(
         degrees: json["Degrees"],
         localized: json["Localized"],
         english: json["English"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Degrees": degrees,
         "Localized": localized,
         "English": english,
@@ -311,11 +309,11 @@ class WindGust {
 
     ApparentTemperature speed;
 
-    factory WindGust.fromJson(Map<String, dynamic> json) => WindGust(
+    factory WindGust.fromJson(Map<String?, dynamic> json) => WindGust(
         speed: ApparentTemperature.fromJson(json["Speed"]),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String?, dynamic> toJson() => {
         "Speed": speed.toJson(),
     };
 }
