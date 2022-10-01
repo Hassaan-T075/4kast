@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/constants/api_constants.dart';
-import 'package:weather_app/models/current_forecast.dart';
+import 'package:weather_app/models/current_conditions.dart';
 
-class ApiService {
+class CurrentConditions {
   static Future<CurrentForecast?> getData(String key) async {
     try {
       // final response =
