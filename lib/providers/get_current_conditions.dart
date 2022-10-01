@@ -18,6 +18,7 @@ class CurrentConditions {
         List<CurrentForecast> model = CurrentForecastFromJson(response.body);
         //return _model;
         //print(response.body);
+        //print(url);
         return model[0];
       }
     } catch (e) {

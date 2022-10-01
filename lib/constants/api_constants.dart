@@ -1,9 +1,10 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, non_constant_identifier_names
 
-class Api_constants{
+class Api_constants {
   static String url = "http://dataservice.accuweather.com";
   static String current = "/currentconditions/v1/";
-  static String daily = "/forecasts/v1/daily/1day/";
+  static String hourly = "/forecasts/v1/hourly/12hour/";
   static String location = "/locations/v1/search";
-  static String api_key = "GcTGOmjTbPGl7JzOEba7aUvrgCzw7PO9";
+  static String daily = "/forecasts/v1/daily/5day/";
+  static String api_key = "QKLGVLZi1xPfiD0SAczljrGDTvNhwVke";
 }

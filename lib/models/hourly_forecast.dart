@@ -22,7 +22,7 @@ class Forecast {
         required this.link,
     });
 
-    DateTime dateTime;
+    String dateTime;
     int epochDateTime;
     int weatherIcon;
     IconPhrase? iconPhrase;
@@ -34,7 +34,7 @@ class Forecast {
     String link;
 
     factory Forecast.fromJson(Map<String, dynamic> json) => Forecast(
-        dateTime: DateTime.parse(json["DateTime"]),
+        dateTime: json["DateTime"],
         epochDateTime: json["EpochDateTime"],
         weatherIcon: json["WeatherIcon"],
         iconPhrase: iconPhraseValues.map[json["IconPhrase"]],
@@ -47,7 +47,7 @@ class Forecast {
     );
 
     Map<String, dynamic> toJson() => {
-        "DateTime": dateTime.toIso8601String(),
+        "DateTime": dateTime,
         "EpochDateTime": epochDateTime,
         "WeatherIcon": weatherIcon,
         "IconPhrase": iconPhraseValues.reverse[iconPhrase],
@@ -60,11 +60,10 @@ class Forecast {
     };
 }
 
-enum IconPhrase { SUNNY, HAZY_SUNSHINE }
+enum IconPhrase { HAZY_SUNSHINE }
 
 final iconPhraseValues = EnumValues({
-    "Hazy sunshine": IconPhrase.HAZY_SUNSHINE,
-    "Sunny": IconPhrase.SUNNY
+    "Hazy sunshine": IconPhrase.HAZY_SUNSHINE
 });
 
 class Temperature {
@@ -74,12 +73,12 @@ class Temperature {
         required this.unitType,
     });
 
-    int value;
+    double value;
     Unit? unit;
     int unitType;
 
     factory Temperature.fromJson(Map<String, dynamic> json) => Temperature(
-        value: json["Value"],
+        value: json["Value"].toDouble(),
         unit: unitValues.map[json["Unit"]],
         unitType: json["UnitType"],
     );
@@ -91,10 +90,10 @@ class Temperature {
     };
 }
 
-enum Unit { F }
+enum Unit { C }
 
 final unitValues = EnumValues({
-    "F": Unit.F
+    "C": Unit.C
 });
 
 class EnumValues<T> {
