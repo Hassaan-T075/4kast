@@ -21,13 +21,21 @@ class _SettingsState extends State<Settings> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black87,
+            toolbarHeight: 40,
+            backgroundColor: Colors.black,
             leading: IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.arrow_back_ios_new)),
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 20,
+                )),
             // ignore: prefer_const_literals_to_create_immutables
             actions: [
-              Icon(Icons.add),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/choose_location');
+                  },
+                  icon: Icon(Icons.add)),
               SizedBox(
                 width: 15,
               ),
@@ -38,12 +46,28 @@ class _SettingsState extends State<Settings> {
               image: DecorationImage(
                   image: AssetImage('assets/loc.jpg'), fit: BoxFit.cover),
             ),
-            child: Column(
-              children: [
-                Row(
-                  children: [],
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Column(
+                children: [
+                  Divider(
+                    thickness: 0.15,
+                    //height: 10,
+                    color: Colors.white,
+                  ),
+                  Card(
+                    child: ListTile(
+                      leading: Icon(Icons.location_city_outlined),
+                      title: Text('Miami'),
+                      dense: true,
+                      trailing: Icon(Icons.menu),
+                    ),
+                  ),
+                  Row(
+                    children: [],
+                  )
+                ],
+              ),
             ),
           ),
         ),

@@ -13,8 +13,10 @@ import 'package:weather_app/providers/get_location_key.dart';
 import 'package:weather_app/providers/get_hourly_forecast.dart';
 import 'package:weather_app/providers/get_daily_forecast.dart';
 import 'package:weather_app/models/daily_forecast.dart';
+import 'package:weather_app/screens/choose_location.dart';
 import 'package:weather_app/screens/settings.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:weather_app/constants/api_constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(),
         '/settings': (context) => Settings(),
+        '/choose_location': (context) => ChooseLocation(),
       },
       //home: const MyHomePage(title: 'Weather App'),
       //home: const MyHomePage(),
@@ -53,10 +56,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String? test = "";
-  final region = TextEditingController(text: 'Miami');
+  //final region = TextEditingController(text: 'Miami');
 
   int temp = 0;
-  String img = 'city3.jpg';
+  String img = 'city.png';
   CurrentForecast? current;
   List<Forecast>? twelve_hour;
   DailyForecast? five_day;
@@ -85,15 +88,23 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          Text(
+                            Api_constants.region.text.toString(),
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 150,
+                          ),
                           InkWell(
                             onTap: (() {
                               Navigator.pushNamed(context, '/settings');
@@ -110,52 +121,55 @@ class _MyHomePageState extends State<MyHomePage> {
                         iconSize: 100,
                         onPressed: () async {
                           //get location key
-                          String? lockey = await LocationKey.getLocation(
-                              region.text.toString());
-                          //print(lockey);
+                          if (Api_constants.region.text.toString() != "") {
+                            String? lockey = await LocationKey.getLocation(
+                                Api_constants.region.text.toString());
+                            //print(lockey);
 
-                          //get current weather
-                          current = await CurrentConditions.getData(
-                              lockey.toString());
+                            //get current weather
+                            current = await CurrentConditions.getData(
+                                lockey.toString());
 
-                          //get hourly forecast
-                          twelve_hour = await GetHourlyForecast.getForecast(
-                              lockey.toString());
+                            //get hourly forecast
+                            twelve_hour = await GetHourlyForecast.getForecast(
+                                lockey.toString());
 
-                          //get daily forecast
-                          five_day = await GetDailyForecast.getForecast(
-                              lockey.toString());
+                            //get daily forecast
+                            five_day = await GetDailyForecast.getForecast(
+                                lockey.toString());
 
-                          img =
-                              current!.isDayTime ? 'day1.jfif' : 'night2.jfif';
-                          temp = round_off(current!.temperature.metric.value);
+                            img = current!.isDayTime
+                                ? 'day1.jfif'
+                                : 'night2.jfif';
+                            temp = round_off(current!.temperature.metric.value);
 
-                          list_size = twelve_hour!.length;
+                            list_size = twelve_hour!.length;
 
-                          day_list_size = five_day!.dailyForecasts.length;
+                            day_list_size = five_day!.dailyForecasts.length;
 
-                          (current!.isDayTime)
-                              ? top_row = Color.fromARGB(255, 239, 113, 44)
-                              : top_row = Color.fromARGB(255, 18, 18, 17);
+                            (current!.isDayTime)
+                                ? top_row = Color.fromARGB(255, 239, 113, 44)
+                                : top_row = Color.fromARGB(255, 18, 18, 17);
 
-                          (current!.isDayTime)
-                              ? overlayStyle = SystemUiOverlayStyle(
-                                  systemNavigationBarColor: Colors.black)
-                              : overlayStyle = SystemUiOverlayStyle(
-                                  systemNavigationBarColor: Colors.black);
+                            (current!.isDayTime)
+                                ? overlayStyle = SystemUiOverlayStyle(
+                                    systemNavigationBarColor: Colors.black)
+                                : overlayStyle = SystemUiOverlayStyle(
+                                    systemNavigationBarColor: Colors.black);
 
-                          if (region.text == 'Miami') {
-                            region.text = 'Lahore';
-                          } else {
-                            region.text = 'Miami';
+                            // if (region.text == 'Miami') {
+                            //   region.text = 'Lahore';
+                            // } else {
+                            //   region.text = 'Miami';
+                            // }
+
+                            setState(() {});
                           }
-
-                          setState(() {});
                         },
                         icon: const Icon(Icons.arrow_drop_down_rounded),
                       ),
                       Text(
-                        "$temp °C",
+                        (current != null) ? "$temp °C" : "- °C",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -232,7 +246,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 color: (index % 2 == 0)
                                                     ? Colors.white
                                                     : (current!.isDayTime)
-                                                        ? Colors.orange
+                                                        ? Colors
+                                                            .deepOrangeAccent
                                                         : Colors.cyan,
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
@@ -245,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: (index % 2 == 0)
                                                   ? Colors.white
                                                   : (current!.isDayTime)
-                                                      ? Colors.orange
+                                                      ? Colors.deepOrangeAccent
                                                       : Colors.cyan,
                                               //fontSize: 20,
                                               //fontWeight: FontWeight.bold
@@ -300,6 +315,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ],
                               ),
                               child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: day_list_size,
                                   itemBuilder: (context, index) {
                                     return Card(
@@ -352,7 +368,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                     );
                                   }),
                             )
-                          : Text('no data'),
+                          : SizedBox(
+                              height: 177,
+                            ),
                       SizedBox(
                         height: 100,
                       )
