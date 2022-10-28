@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_app/models/location_card.dart';
 
+import '../models/current_conditions.dart';
+import '../models/daily_forecast.dart';
+import '../models/hourly_forecast.dart';
+import '../providers/get_current_conditions.dart';
+import '../providers/get_daily_forecast.dart';
+import '../providers/get_hourly_forecast.dart';
+import '../providers/get_location_key.dart';
+
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
@@ -61,6 +69,10 @@ class _SettingsState extends State<Settings> {
     }
   }
 
+  CurrentForecast? current;
+  List<Forecast>? twelve_hour;
+  DailyForecast? five_day;
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -104,6 +116,45 @@ class _SettingsState extends State<Settings> {
                   Column(
                     children: cities
                         .map((city) => GestureDetector(
+                              onTap: () async {
+                                showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        height: 200,
+                                        color: Colors.black87,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    });
+
+                                String? lockey = await LocationKey.getLocation(
+                                    city.toString());
+                                //print(lockey);
+
+                                //get current weather
+                                current = await CurrentConditions.getData(
+                                    lockey.toString());
+
+                                //get hourly forecast
+                                twelve_hour =
+                                    await GetHourlyForecast.getForecast(
+                                        lockey.toString());
+
+                                //get daily forecast
+                                five_day = await GetDailyForecast.getForecast(
+                                    lockey.toString());
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushNamed(context, "/", arguments: {
+                                  'current': current,
+                                  'twelve_hour': twelve_hour,
+                                  'five_day': five_day,
+                                  'cityValue': city
+                                });
+                              },
                               onTapDown: (details) => _getTapPosition(details),
                               onLongPress: () =>
                                   _showContextMenu(context, city),

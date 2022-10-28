@@ -183,9 +183,26 @@ class _ChooseLocationState extends State<ChooseLocation> {
                       highlightColor: Colors.white,
                       onTap: () async {
                         //Api_constants.region.text = cityValue.toString();
-                        cities.add(cityValue.toString());
 
                         if (cityValue != "") {
+                          
+                          cities.add(cityValue.toString());
+                          cities = cities.toSet().toList();
+
+                          showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 200,
+                                  color: Color.fromARGB(255, 148, 41, 120),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                );
+                              });
+
                           String? lockey = await LocationKey.getLocation(
                               cityValue.toString());
                           //print(lockey);
@@ -201,13 +218,12 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           //get daily forecast
                           five_day = await GetDailyForecast.getForecast(
                               lockey.toString());
-                          Navigator.pushNamed(context, "/",
-                              arguments: {
-                                'current': current,
-                                'twelve_hour': twelve_hour,
-                                'five_day': five_day,
-                                'cityValue': cityValue
-                              });
+                          Navigator.pushNamed(context, "/", arguments: {
+                            'current': current,
+                            'twelve_hour': twelve_hour,
+                            'five_day': five_day,
+                            'cityValue': cityValue
+                          });
                         }
                         // print('$current $twelve_hour $five_day');
                       },

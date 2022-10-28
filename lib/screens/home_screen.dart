@@ -280,7 +280,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                           //crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "${five_day?.dailyForecasts[index].date.month} / ${five_day?.dailyForecasts[index].date.day}",
+                                              (five_day!.dailyForecasts[index]
+                                                          .date.day <
+                                                      9)
+                                                  ? "${five_day?.dailyForecasts[index].date.month} / 0${five_day?.dailyForecasts[index].date.day}"
+                                                  : "${five_day?.dailyForecasts[index].date.month} / ${five_day?.dailyForecasts[index].date.day}",
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 15),
@@ -302,11 +306,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         fontSize: 15),
                                                   ),
                                             Image.network(
-                                              'https://developer.accuweather.com/sites/default/files/01-s.png',
+                                              icons[five_day!
+                                                  .dailyForecasts[index]
+                                                  .day
+                                                  .icon],
                                               scale: 1.5,
                                             ),
                                             Text(
-                                              "${round_off(five_day!.dailyForecasts[index].temperature.maximum.value)}",
+                                              "${round_off(five_day!.dailyForecasts[index].temperature.minimum.value)}",
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 15),

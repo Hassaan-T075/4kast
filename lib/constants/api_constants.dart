@@ -8,6 +8,6 @@ class Api_constants {
   static String hourly = "/forecasts/v1/hourly/12hour/";
   static String location = "/locations/v1/search";
   static String daily = "/forecasts/v1/daily/5day/";
-  static String api_key = "lBz4g6XBItkePft4j4rU8nnJ0w3YReG0";
+  static String api_key = "VWSNl3GR2YOSFkwg6zOHg2ozlfKpgfui";
   static final region = TextEditingController(text: '');
 }
