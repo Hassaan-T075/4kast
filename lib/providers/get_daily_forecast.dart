@@ -8,7 +8,7 @@ import 'package:weather_app/models/daily_forecast.dart';
 import 'package:weather_app/models/location.dart';
 
 class GetDailyForecast {
-  static Future<DailyForecast> getForecast(String key) async {
+  static Future<DailyForecast?> getForecast(String key) async {
     try {
       
       var url = Uri.parse(Api_constants.url + Api_constants.daily + key +"?apikey=" + Api_constants.api_key + "&metric=true");
@@ -24,9 +24,9 @@ class GetDailyForecast {
     } catch (e) {
       log(e.toString());
     }
-    throw
-    {
+    // throw
+    // {
 
-    };
+    // };
   }
 }

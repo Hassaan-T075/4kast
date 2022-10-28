@@ -1,11 +1,20 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:weather_app/constants/api_constants.dart';
+import 'package:weather_app/screens/settings.dart';
+
+import '../models/current_conditions.dart';
+import '../models/daily_forecast.dart';
+import '../models/hourly_forecast.dart';
+import '../providers/get_current_conditions.dart';
+import '../providers/get_daily_forecast.dart';
+import '../providers/get_hourly_forecast.dart';
+import '../providers/get_location_key.dart';
+import 'package:weather_app/models/arguments.dart';
 
 class ChooseLocation extends StatefulWidget {
   const ChooseLocation({super.key});
@@ -21,6 +30,10 @@ class _ChooseLocationState extends State<ChooseLocation> {
   String countryValue = "";
   String? stateValue = "";
   String? cityValue = "";
+
+  CurrentForecast? current;
+  List<Forecast>? twelve_hour;
+  DailyForecast? five_day;
 
   @override
   Widget build(BuildContext context) {
@@ -168,11 +181,35 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     borderRadius: BorderRadius.circular(20),
                     child: InkWell(
                       highlightColor: Colors.white,
-                      onTap: () {
-                        Api_constants.region.text = cityValue.toString();
-                        if (cityValue.toString() != "") {
-                          Navigator.pop(context);
+                      onTap: () async {
+                        //Api_constants.region.text = cityValue.toString();
+                        cities.add(cityValue.toString());
+
+                        if (cityValue != "") {
+                          String? lockey = await LocationKey.getLocation(
+                              cityValue.toString());
+                          //print(lockey);
+
+                          //get current weather
+                          current = await CurrentConditions.getData(
+                              lockey.toString());
+
+                          //get hourly forecast
+                          twelve_hour = await GetHourlyForecast.getForecast(
+                              lockey.toString());
+
+                          //get daily forecast
+                          five_day = await GetDailyForecast.getForecast(
+                              lockey.toString());
+                          Navigator.pushNamed(context, "/",
+                              arguments: {
+                                'current': current,
+                                'twelve_hour': twelve_hour,
+                                'five_day': five_day,
+                                'cityValue': cityValue
+                              });
                         }
+                        // print('$current $twelve_hour $five_day');
                       },
                       borderRadius: BorderRadius.circular(20),
                       child: GlassmorphicContainer(
