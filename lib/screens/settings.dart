@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_app/models/location_card.dart';
 
 import '../models/current_conditions.dart';
@@ -11,6 +12,8 @@ import '../providers/get_current_conditions.dart';
 import '../providers/get_daily_forecast.dart';
 import '../providers/get_hourly_forecast.dart';
 import '../providers/get_location_key.dart';
+import 'package:weather_app/models/helper_functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -18,8 +21,6 @@ class Settings extends StatefulWidget {
   @override
   State<Settings> createState() => _SettingsState();
 }
-
-List<String> cities = [];
 
 class _SettingsState extends State<Settings> {
   static const SystemUiOverlayStyle overlayStyle =
@@ -62,8 +63,14 @@ class _SettingsState extends State<Settings> {
         {
           //cities.remove(city);
           setState(() {
-            cities.remove(city);
+            cities!.remove(city);
           });
+
+          // obtain shared preferences
+          final prefs = await SharedPreferences.getInstance();
+
+          // set value
+          prefs.setStringList('city', cities!);
         }
         break;
     }
@@ -114,7 +121,7 @@ class _SettingsState extends State<Settings> {
                     color: Colors.white,
                   ),
                   Column(
-                    children: cities
+                    children: cities!
                         .map((city) => GestureDetector(
                               onTap: () async {
                                 showModalBottomSheet<void>(
@@ -124,12 +131,26 @@ class _SettingsState extends State<Settings> {
                                         height: 200,
                                         color: Colors.black87,
                                         child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
+                                          child: SpinKitSquareCircle(
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white),
+                                              );
+                                            },
                                           ),
                                         ),
                                       );
                                     });
+
+                                currentcity = city;
+
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+
+                                // set value
+                                await prefs.setString('current', currentcity!);
 
                                 String? lockey = await LocationKey.getLocation(
                                     city.toString());

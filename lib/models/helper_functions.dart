@@ -57,6 +57,9 @@ List<String> icons = [
   "https://developer.accuweather.com/sites/default/files/44-s.png",
 ];
 
+List<String>? cities = [];
+String? currentcity = '';
+
 String week_day(int val) {
   switch (val) {
     case 1:

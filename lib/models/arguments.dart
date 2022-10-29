@@ -8,6 +8,8 @@ class Arguments {
   CurrentForecast? current;
   List<Forecast>? twelve_hour;
   DailyForecast? five_day;
+  String CityName;
 
-  Arguments({this.current, this.twelve_hour, this.five_day});
+  Arguments(
+      {this.current, this.twelve_hour, this.five_day, required this.CityName});
 }

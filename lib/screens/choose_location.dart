@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:weather_app/constants/api_constants.dart';
 import 'package:weather_app/screens/settings.dart';
@@ -14,7 +15,9 @@ import '../providers/get_current_conditions.dart';
 import '../providers/get_daily_forecast.dart';
 import '../providers/get_hourly_forecast.dart';
 import '../providers/get_location_key.dart';
+import 'package:weather_app/models/helper_functions.dart';
 import 'package:weather_app/models/arguments.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChooseLocation extends StatefulWidget {
   const ChooseLocation({super.key});
@@ -185,19 +188,34 @@ class _ChooseLocationState extends State<ChooseLocation> {
                         //Api_constants.region.text = cityValue.toString();
 
                         if (cityValue != "") {
-                          
-                          cities.add(cityValue.toString());
-                          cities = cities.toSet().toList();
+                          cities!.add(cityValue.toString());
+                          cities = cities!.toSet().toList();
+
+                          currentcity = cityValue.toString();
+
+                          // obtain shared preferences
+                          final prefs = await SharedPreferences.getInstance();
+
+                          // set value
+                          await prefs.setString('current', currentcity!);
+
+                          prefs.setStringList('city', cities!);
 
                           showModalBottomSheet<void>(
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
                                   height: 200,
-                                  color: Color.fromARGB(255, 148, 41, 120),
+                                  color: Colors.black87,
                                   child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.black,
+                                    child: SpinKitSquareCircle(
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              color: Colors.purpleAccent),
+                                        );
+                                      },
                                     ),
                                   ),
                                 );
@@ -218,12 +236,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           //get daily forecast
                           five_day = await GetDailyForecast.getForecast(
                               lockey.toString());
-                          Navigator.pushNamed(context, "/", arguments: {
-                            'current': current,
-                            'twelve_hour': twelve_hour,
-                            'five_day': five_day,
-                            'cityValue': cityValue
-                          });
+                          Navigator.pushReplacementNamed(context, "/",
+                              arguments: {
+                                'current': current,
+                                'twelve_hour': twelve_hour,
+                                'five_day': five_day,
+                                'cityValue': cityValue
+                              });
                         }
                         // print('$current $twelve_hour $five_day');
                       },
