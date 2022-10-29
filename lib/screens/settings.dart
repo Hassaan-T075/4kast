@@ -169,7 +169,7 @@ class _SettingsState extends State<Settings> {
                                 five_day = await GetDailyForecast.getForecast(
                                     lockey.toString());
                                 // ignore: use_build_context_synchronously
-                                Navigator.pushNamed(context, "/", arguments: {
+                                Navigator.pushReplacementNamed(context, "/", arguments: {
                                   'current': current,
                                   'twelve_hour': twelve_hour,
                                   'five_day': five_day,

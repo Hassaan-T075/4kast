@@ -88,8 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: SingleChildScrollView(
-                  child: Column(
+                child: ListView(children: [
+                  Column(
                     //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Text(
                             // ignore: unnecessary_null_comparison
                             (city != null) ? city.toString() : '',
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 150,
@@ -112,14 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             }),
                             child: Icon(
                               Icons.more_horiz,
-                              size: 20,
+                              size: 25,
                               color: Colors.white,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 70,
                       ),
                       Text(
                         (current != null) ? "$temp °C" : "- °C",
@@ -130,18 +130,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Text(
                         (current != null) ? "${current!.weatherText}" : "-",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.blueGrey,
                           fontSize: 40,
                           //fontWeight: FontWeight.bold
                         ),
                       ),
                       SizedBox(
                         height: 40,
+                      ),
+                      SizedBox(
+                        height: 30,
                       ),
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -332,11 +335,79 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 177,
                             ),
                       SizedBox(
-                        height: 100,
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                "Wind",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                (current != null)
+                                    ? " ${current!.wind.speed.metric.value}km/h"
+                                    : "-",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "Feels like",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                (current != null)
+                                    ? "${round_off(current!.realFeelTemperature.metric.value)} °C"
+                                    : "-",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "Humidity",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                (current != null)
+                                    ? " ${current!.relativeHumidity}%"
+                                    : "-",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 0,
                       ),
                     ],
                   ),
-                ),
+                ]),
               ),
             ),
           ),

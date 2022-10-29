@@ -236,7 +236,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           //get daily forecast
                           five_day = await GetDailyForecast.getForecast(
                               lockey.toString());
-                          Navigator.pushReplacementNamed(context, "/",
+                          Navigator.pushReplacementNamed(context, "/home_page",
                               arguments: {
                                 'current': current,
                                 'twelve_hour': twelve_hour,

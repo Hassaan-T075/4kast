@@ -43,10 +43,10 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/load',
+      initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(),
-        '/load':(context) => LoadData(),
+        '/': (context) => LoadData(),
+        '/home_page':(context) => MyHomePage(),
         '/settings': (context) => Settings(),
         '/choose_location': (context) => ChooseLocation(),
       },

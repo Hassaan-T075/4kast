@@ -56,7 +56,7 @@ class _LoadDataState extends State<LoadData> {
 
     (cities!.isEmpty)
         ? Navigator.pushReplacementNamed(context, '/choose_location')
-        : Navigator.pushReplacementNamed(context, "/", arguments: {
+        : Navigator.pushReplacementNamed(context, "/home_page", arguments: {
             'current': current,
             'twelve_hour': twelve_hour,
             'five_day': five_day,
