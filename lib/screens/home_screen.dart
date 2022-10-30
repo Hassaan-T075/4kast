@@ -1,28 +1,16 @@
 // ignore_for_file: unused_import, avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, unused_local_variable
 
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-//import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/current_conditions.dart';
 import 'package:weather_app/models/hourly_forecast.dart';
-//import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/helper_functions.dart';
-// import 'package:weather_app/providers/get_current_conditions.dart';
-// import 'package:weather_app/providers/get_location_key.dart';
-// import 'package:weather_app/providers/get_hourly_forecast.dart';
-// import 'package:weather_app/providers/get_daily_forecast.dart';
 import 'package:weather_app/models/daily_forecast.dart';
-//import 'package:weather_app/screens/choose_location.dart';
-//import 'package:weather_app/screens/settings.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:weather_app/constants/api_constants.dart';
-//import 'package:weather_app/models/dummy.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
-  //final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -30,8 +18,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String? test = "";
+
   Map data = {};
-  //final region = TextEditingController(text: 'Miami');
 
   int temp = 0;
   String img = 'city.png';
@@ -48,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //print(ModalRoute.of(context)!.settings.arguments);
     if (ModalRoute.of(context)!.settings.arguments != null) {
       data = ModalRoute.of(context)!.settings.arguments as Map;
       current = data['current'];
@@ -73,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
           : overlayStyle =
               SystemUiOverlayStyle(systemNavigationBarColor: Colors.black);
     }
-    //SystemChrome.setSystemUIOverlayStyle(overlayStyle);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: overlayStyle,
@@ -90,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: ListView(children: [
                   Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
                         height: 25,
@@ -99,7 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            // ignore: unnecessary_null_comparison
                             (city != null) ? city.toString() : '',
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
@@ -126,7 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
-                          //fontWeight: FontWeight.bold
                         ),
                       ),
                       SizedBox(
@@ -137,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(
                           color: Colors.blueGrey,
                           fontSize: 40,
-                          //fontWeight: FontWeight.bold
                         ),
                       ),
                       SizedBox(
@@ -147,8 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 30,
                       ),
                       Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: SizedBox(
@@ -165,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    //shadowColor: Colors.amber,
                                     child: GlassmorphicContainer(
                                       borderRadius: 20,
                                       width: 100,
@@ -218,16 +197,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   : (current!.isDayTime)
                                                       ? Colors.deepOrangeAccent
                                                       : Colors.cyan,
-                                              //fontSize: 20,
-                                              //fontWeight: FontWeight.bold
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    //height: 50,
-                                    //color: Colors.amber,
-                                    //child: Center(child: Text('Entry')),
                                   );
                                 },
                                 separatorBuilder:
@@ -280,7 +254,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
-                                          //crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text(
                                               (five_day!.dailyForecasts[index]
@@ -401,9 +374,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 0,
                       ),
                     ],
                   ),

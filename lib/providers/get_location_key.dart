@@ -15,8 +15,6 @@ class LocationKey {
       
       if (response.statusCode == 200) {
         List<Location> model = locationFromJson(response.body);
-        //print(model.length);
-        print(url);
         return model[0].key;
       }
     } catch (e) {

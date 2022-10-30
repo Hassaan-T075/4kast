@@ -1,12 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/models/helper_functions.dart';
-
 import '../models/current_conditions.dart';
 import '../models/daily_forecast.dart';
 import '../models/hourly_forecast.dart';
@@ -42,7 +39,6 @@ class _LoadDataState extends State<LoadData> {
       currentcity = prefs.getString('current');
 
       String? lockey = await LocationKey.getLocation(currentcity.toString());
-      //print(lockey);
 
       //get current weather
       current = await CurrentConditions.getData(lockey.toString());

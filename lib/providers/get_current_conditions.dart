@@ -9,16 +9,10 @@ import 'package:weather_app/models/current_conditions.dart';
 class CurrentConditions {
   static Future<CurrentForecast?> getData(String key) async {
     try {
-      // final response =
-      // await http.get(Uri.parse(API_URL + "products"));
-      
       var url = Uri.parse(Api_constants.url + Api_constants.current + key + "?apikey=" + Api_constants.api_key + "&language=en-us&details=true");
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<CurrentForecast> model = CurrentForecastFromJson(response.body);
-        //return _model;
-        //print(response.body);
-        //print(url);
         return model[0];
       }
     } catch (e) {

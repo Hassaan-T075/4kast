@@ -1,5 +1,3 @@
-//final CurrentForecast = CurrentForecastFromJson(jsonString?);
-
 import 'dart:convert';
 
 List<CurrentForecast> CurrentForecastFromJson(String str) => List<CurrentForecast>.from(json.decode(str).map((x) => CurrentForecast.fromJson(x)));

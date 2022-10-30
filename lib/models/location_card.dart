@@ -5,11 +5,9 @@ import 'package:glassmorphism/glassmorphism.dart';
 
 class loc_card extends StatefulWidget {
   final String city_name;
-  //final Function remove;
 
   const loc_card({
     required this.city_name,
-    //required this.remove,
   });
 
   @override
@@ -17,7 +15,6 @@ class loc_card extends StatefulWidget {
 }
 
 class _loc_cardState extends State<loc_card> {
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -52,7 +49,6 @@ class _loc_cardState extends State<loc_card> {
           ],
         ),
         child: ListTile(
-          //onLongPress: () => _showContextMenu(context),
           leading: Icon(
             Icons.location_city_outlined,
             color: Colors.white,

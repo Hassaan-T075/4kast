@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final dailyForecast = dailyForecastFromJson(jsonString);
+// ignore_for_file: unnecessary_null_comparison, prefer_conditional_assignment, unnecessary_new
 
 import 'dart:convert';
 
@@ -161,8 +159,6 @@ class Headline {
         required this.severity,
         required this.text,
         required this.category,
-        //required this.endDate,
-        //required this.endEpochDate,
         required this.mobileLink,
         required this.link,
     });
@@ -172,8 +168,6 @@ class Headline {
     int severity;
     String text;
     String category;
-    //DateTime endDate;
-    //int endEpochDate;
     String mobileLink;
     String link;
 
@@ -183,8 +177,6 @@ class Headline {
         severity: json["Severity"],
         text: json["Text"],
         category: json["Category"],
-        //endDate: DateTime.parse(json["EndDate"]),
-        //endEpochDate: json["EndEpochDate"],
         mobileLink: json["MobileLink"],
         link: json["Link"],
     );
@@ -195,8 +187,6 @@ class Headline {
         "Severity": severity,
         "Text": text,
         "Category": category,
-        //"EndDate": endDate.toIso8601String(),
-        //"EndEpochDate": endEpochDate,
         "MobileLink": mobileLink,
         "Link": link,
     };

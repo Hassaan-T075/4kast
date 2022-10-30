@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_app/models/location_card.dart';
-
 import '../models/current_conditions.dart';
 import '../models/daily_forecast.dart';
 import '../models/hourly_forecast.dart';
@@ -34,7 +33,6 @@ class _SettingsState extends State<Settings> {
     });
   }
 
-  // This function will be called when you long press on the blue box or the image
   void _showContextMenu(BuildContext context, String city) async {
     final RenderObject? overlay =
         Overlay.of(context)?.context.findRenderObject();
@@ -61,7 +59,6 @@ class _SettingsState extends State<Settings> {
     switch (result) {
       case 'delete':
         {
-          //cities.remove(city);
           setState(() {
             cities!.remove(city);
           });
@@ -154,7 +151,6 @@ class _SettingsState extends State<Settings> {
 
                                 String? lockey = await LocationKey.getLocation(
                                     city.toString());
-                                //print(lockey);
 
                                 //get current weather
                                 current = await CurrentConditions.getData(
@@ -168,13 +164,14 @@ class _SettingsState extends State<Settings> {
                                 //get daily forecast
                                 five_day = await GetDailyForecast.getForecast(
                                     lockey.toString());
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushReplacementNamed(context, "/", arguments: {
-                                  'current': current,
-                                  'twelve_hour': twelve_hour,
-                                  'five_day': five_day,
-                                  'cityValue': city
-                                });
+
+                                Navigator.pushReplacementNamed(context, "/",
+                                    arguments: {
+                                      'current': current,
+                                      'twelve_hour': twelve_hour,
+                                      'five_day': five_day,
+                                      'cityValue': city
+                                    });
                               },
                               onTapDown: (details) => _getTapPosition(details),
                               onLongPress: () =>
@@ -185,9 +182,6 @@ class _SettingsState extends State<Settings> {
                             ))
                         .toList(),
                   ),
-                  // Row(
-                  //   children: [],
-                  // )
                 ],
               ),
             ),

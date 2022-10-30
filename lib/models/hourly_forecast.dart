@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final forecast = forecastFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Forecast> forecastFromJson(String str) => List<Forecast>.from(json.decode(str).map((x) => Forecast.fromJson(x)));

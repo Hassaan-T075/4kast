@@ -17,16 +17,10 @@ class GetDailyForecast {
       print(response.statusCode);
       if (response.statusCode == 200) {
         DailyForecast model = dailyForecastFromJson(response.body);
-        //print(model.length);
-        print(url);
         return model;
       }
     } catch (e) {
       log(e.toString());
     }
-    // throw
-    // {
-
-    // };
   }
 }
