@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather_app/models/location_card.dart';
+import 'package:weather_app/widgets/location_card.dart';
 import '../models/current_conditions.dart';
 import '../models/daily_forecast.dart';
 import '../models/hourly_forecast.dart';
-import '../providers/get_current_conditions.dart';
-import '../providers/get_daily_forecast.dart';
-import '../providers/get_hourly_forecast.dart';
-import '../providers/get_location_key.dart';
-import 'package:weather_app/models/helper_functions.dart';
+import '../services/get_current_conditions.dart';
+import '../services/get_daily_forecast.dart';
+import '../services/get_hourly_forecast.dart';
+import '../services/get_location_key.dart';
+import 'package:weather_app/global/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -87,6 +87,8 @@ class _SettingsState extends State<Settings> {
             toolbarHeight: 40,
             backgroundColor: Colors.black,
             leading: IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(
                   Icons.arrow_back_ios_new,
@@ -94,6 +96,8 @@ class _SettingsState extends State<Settings> {
                 )),
             actions: [
               IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onPressed: () {
                     Navigator.pushNamed(context, '/choose_location');
                   },
@@ -165,7 +169,11 @@ class _SettingsState extends State<Settings> {
                                 five_day = await GetDailyForecast.getForecast(
                                     lockey.toString());
 
-                                Navigator.pushReplacementNamed(context, "/",
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+
+                                Navigator.pushReplacementNamed(
+                                    context, "/home_page",
                                     arguments: {
                                       'current': current,
                                       'twelve_hour': twelve_hour,

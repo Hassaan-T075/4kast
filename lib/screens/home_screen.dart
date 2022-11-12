@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/current_conditions.dart';
 import 'package:weather_app/models/hourly_forecast.dart';
-import 'package:weather_app/models/helper_functions.dart';
+import 'package:weather_app/global/global.dart';
 import 'package:weather_app/models/daily_forecast.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:weather_app/constants/api_constants.dart';

@@ -6,5 +6,5 @@ class Api_constants {
   static String hourly = "/forecasts/v1/hourly/12hour/";
   static String location = "/locations/v1/search";
   static String daily = "/forecasts/v1/daily/5day/";
-  static String api_key = "ELxYpN60Zk9LfLq1rv5adqH24lahMX26";
+  static String api_key = "GzYDAqqXPKuhHKOsGixmmpzGG7Pyu0Y3";
 }

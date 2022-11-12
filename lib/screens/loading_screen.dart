@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/models/helper_functions.dart';
+import 'package:weather_app/global/global.dart';
 import '../models/current_conditions.dart';
 import '../models/daily_forecast.dart';
 import '../models/hourly_forecast.dart';
-import '../providers/get_current_conditions.dart';
-import '../providers/get_daily_forecast.dart';
-import '../providers/get_hourly_forecast.dart';
-import '../providers/get_location_key.dart';
+import '../services/get_current_conditions.dart';
+import '../services/get_daily_forecast.dart';
+import '../services/get_hourly_forecast.dart';
+import '../services/get_location_key.dart';
 
 class LoadData extends StatefulWidget {
   const LoadData({super.key});

@@ -8,11 +8,11 @@ import 'package:glassmorphism/glassmorphism.dart';
 import '../models/current_conditions.dart';
 import '../models/daily_forecast.dart';
 import '../models/hourly_forecast.dart';
-import '../providers/get_current_conditions.dart';
-import '../providers/get_daily_forecast.dart';
-import '../providers/get_hourly_forecast.dart';
-import '../providers/get_location_key.dart';
-import 'package:weather_app/models/helper_functions.dart';
+import '../services/get_current_conditions.dart';
+import '../services/get_daily_forecast.dart';
+import '../services/get_hourly_forecast.dart';
+import '../services/get_location_key.dart';
+import 'package:weather_app/global/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChooseLocation extends StatefulWidget {
@@ -44,6 +44,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
           appBar: AppBar(
             backgroundColor: Colors.black87,
             leading: IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(Icons.arrow_back_ios_new)),
             actions: [
@@ -75,7 +77,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     height: 0,
                   ),
                   CSCPicker(
-
                     layout: Layout.vertical,
                     showStates: true,
                     showCities: true,
@@ -198,6 +199,10 @@ class _ChooseLocationState extends State<ChooseLocation> {
                           //get daily forecast
                           five_day = await GetDailyForecast.getForecast(
                               lockey.toString());
+
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+
                           Navigator.pushReplacementNamed(context, "/home_page",
                               arguments: {
                                 'current': current,
